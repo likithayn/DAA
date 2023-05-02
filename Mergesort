@@ -1,0 +1,73 @@
+import java.util.Scanner;
+import java.util.Random;
+class mergesort
+{
+	public static void main(String[] args) 
+	{
+		Scanner sc = new Scanner(System.in);
+		Random ran = new Random();
+		long start,stop;
+		System.out.print("Enter no of elements = ");
+		int n = sc.nextInt();
+		int[] a = new int[n];
+        System.out.print("\n1: Best Case  2: Average Case  3:  Worst Case \nEnter the choice = ");
+		int ch=sc.nextInt();
+		switch(ch)
+		{
+			case 1: System.out.println("\nBest Case");
+					for(int i=0;i<n;i++)
+						a[i]=i;
+					break;
+		   	case 2: System.out.println("\nAverage Case");
+					for(int i=0;i<n;i++)
+						a[i]=ran.nextInt(n);
+					break;
+		   	case 3: System.out.println("\nWorst Case");
+					for(int i=0;i<n;i++)
+						a[i]=n-i;
+					break;		
+			
+		}
+		start=System.nanoTime();
+		Mergesort(a,0,n-1);
+		
+		stop=System.nanoTime();
+        System.out.println("Time taken to sort " +a.length+ " elements = " +(stop-start));
+    }
+	public static void Mergesort(int[] a, int low, int high)
+	{
+		int mid;
+		if(low<high)
+		{
+			mid=(low+high)/2;
+			Mergesort(a, low, mid);
+			Mergesort(a, mid+1, high);
+			Merge(a,low,mid,high);
+		}
+	}
+	public static void Merge(int[] arr,int l,int m,int r) 
+	{
+		int n1 = m-l+1, n2 = r-m;
+		int L[] = new int[n1];
+		int R[] = new int[n2];
+		
+		for(int i=0;i<n1;i++)
+			L[i] = arr[l+i];
+		for(int j=0;j<n2;j++)
+			R[j] = arr[m+j+1];
+			
+		int i=0,j=0,k=l;
+		
+		while(i<n1 && j<n2)
+		{
+			if(L[i]<=R[j])
+				arr[k++] = L[i++];
+			else
+				arr[k++] = R[j++];
+		}
+		while(i<n1)
+			arr[k++] = L[i++];
+		while(j<n2)
+			arr[k++] = R[j++];
+	}
+}
